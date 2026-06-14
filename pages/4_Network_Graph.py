@@ -1,10 +1,10 @@
 """
-Page 4 — Association Rule Network Graph
+Page 4 - Association Rule Network Graph
 
 Interactive NetworkX + Plotly graph where:
   • Nodes  = products
   • Edges  = association rules
-  • Edge colour = lift tier (green > 3, yellow 2–3, red < 2)
+  • Edge colour = lift tier (green > 3, yellow 2-3, red < 2)
   • Edge hover  = support, confidence, lift
 """
 
@@ -25,7 +25,7 @@ st.set_page_config(page_title="Network Graph · SmartBasket AI", page_icon="🔗
 theme.apply_theme()
 
 
-# ── Data ───────────────────────────────────────────────────────────────────────
+# Data
 @st.cache_data(show_spinner=False)
 def load_rules():
     return pd.read_csv(BASE / "models" / "association_rules.csv")
@@ -34,7 +34,7 @@ with st.spinner("Loading rules…"):
     rules_raw = load_rules()
 
 
-# ── Masthead ────────────────────────────────────────────────────────────────--
+# Masthead
 theme.masthead(
     eyebrow="Rule Network",
     title="Association Rule Network",
@@ -43,7 +43,7 @@ theme.masthead(
 )
 
 
-# ── Sidebar controls ────────────────────────────────────────────────────────────
+# Sidebar controls
 with st.sidebar:
     st.markdown("##### Graph controls")
 
@@ -61,11 +61,11 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("##### Edge colour legend")
     st.markdown('<div class="legend-row"><span class="legend-dot" style="background:#10b981"></span>Lift &gt; 3 (strong)</div>', unsafe_allow_html=True)
-    st.markdown('<div class="legend-row"><span class="legend-dot" style="background:#f59e0b"></span>Lift 2–3 (moderate)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="legend-row"><span class="legend-dot" style="background:#f59e0b"></span>Lift 2-3 (moderate)</div>', unsafe_allow_html=True)
     st.markdown('<div class="legend-row"><span class="legend-dot" style="background:#ef4444"></span>Lift &lt; 2 (weak)</div>', unsafe_allow_html=True)
 
 
-# ── Filter rules for graph ──────────────────────────────────────────────────────
+# Filter rules for graph
 graph_rules = filter_rules(
     rules_raw,
     min_support=0.001,
@@ -83,7 +83,7 @@ def _edge_colour(lift: float) -> str:
     return "#ef4444"
 
 
-# ── Build NetworkX graph ────────────────────────────────────────────────────────
+# Build NetworkX graph
 G = nx.DiGraph()
 for _, row in graph_rules.iterrows():
     ant = row["antecedents_str"].strip()
@@ -106,11 +106,11 @@ if G.number_of_nodes() == 0:
     st.stop()
 
 
-# ── Layout ─────────────────────────────────────────────────────────────────────
+# Layout
 pos = nx.spring_layout(G, k=2.5, seed=42, iterations=50)
 
 
-# ── Plotly traces ──────────────────────────────────────────────────────────────
+# Plotly traces
 search_upper = search_node.strip().upper()
 
 # Edge line traces (grouped by lift tier for legend) + midpoint hover markers
@@ -121,7 +121,7 @@ for u, v, data in G.edges(data=True):
     colour = _edge_colour(data["weight"])
     tier = (
         "Lift > 3"  if data["weight"] >= 3.0 else
-        "Lift 2–3"  if data["weight"] >= 2.0 else
+        "Lift 2-3"  if data["weight"] >= 2.0 else
         "Lift < 2"
     )
     x0, y0 = pos[u]
@@ -144,7 +144,7 @@ for u, v, data in G.edges(data=True):
 
 fig = go.Figure()
 
-tier_colours = {"Lift > 3": "#10b981", "Lift 2–3": "#f59e0b", "Lift < 2": "#ef4444"}
+tier_colours = {"Lift > 3": "#10b981", "Lift 2-3": "#f59e0b", "Lift < 2": "#ef4444"}
 for tier, data in edge_traces.items():
     fig.add_trace(go.Scatter(
         x=data["x"], y=data["y"],
@@ -155,7 +155,7 @@ for tier, data in edge_traces.items():
         showlegend=True,
     ))
 
-# Invisible midpoint markers — carry the edge hover tooltips
+# Invisible midpoint markers - carry the edge hover tooltips
 fig.add_trace(go.Scatter(
     x=mid_x, y=mid_y,
     mode="markers",
@@ -229,7 +229,7 @@ with st.container(border=True):
     st.plotly_chart(fig, use_container_width=True)
 
 
-# ── Edge table ─────────────────────────────────────────────────────────────────
+# Edge table
 with st.expander(f"📋 View edge list ({n_edges} rules)"):
     edge_rows = []
     for u, v, d in G.edges(data=True):

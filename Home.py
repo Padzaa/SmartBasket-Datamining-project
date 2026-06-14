@@ -1,5 +1,5 @@
 """
-SmartBasket AI — Landing Page
+SmartBasket AI - Landing Page
 
 Entry point for the Streamlit multipage app.
 """
@@ -41,16 +41,16 @@ def _load_stats():
 
 stats = _load_stats()
 
-# ── Hero ─────────────────────────────────────────────────────────────────────
+# Hero
 theme.masthead(
     eyebrow="Market Basket Intelligence",
     title="SmartBasket AI",
-    subtitle="A hybrid recommendation and market-basket analytics platform — "
+    subtitle="A hybrid recommendation and market-basket analytics platform - "
              "FP-Growth rules, ALS collaborative filtering and margin-aware "
              "ranking, in one explainable workspace.",
 )
 
-# ── KPI strip (main area) ──────────────────────────────────────────────────--
+# KPI strip (main area)
 if stats:
     theme.kpi_row([
         {"label": "Transactions", "value": f"{stats['transactions']:,}", "sub": "unique baskets"},
@@ -61,14 +61,14 @@ if stats:
 else:
     st.info("Run the data pipeline to populate dataset statistics.")
 
-# ── Sidebar ────────────────────────────────────────────────────────────────--
+# Sidebar
 with st.sidebar:
     st.markdown("##### Model status")
     als_path = BASE / "models" / "als_model.pkl"
     if als_path.exists():
-        st.success("ALS model — trained ✓")
+        st.success("ALS model - trained ✓")
     else:
-        st.warning("ALS model — not trained")
+        st.warning("ALS model - not trained")
         st.caption("Run `python scripts/train_als.py` to train.")
 
     st.markdown("##### Pipeline")
@@ -83,7 +83,7 @@ with st.sidebar:
     )
     st.caption("SmartBasket AI · Data Mining Project")
 
-# ── Navigation grid ──────────────────────────────────────────────────────────
+# Navigation grid
 theme.section("Explore the workspace", "Four lenses on the same dataset")
 
 c1, c2 = st.columns(2, gap="medium")
@@ -108,7 +108,7 @@ with c2:
 
 st.caption("Use the sidebar to switch between pages.")
 
-# ── About ──────────────────────────────────────────────────────────────────--
+# About
 theme.section("Under the hood")
 
 a1, a2 = st.columns([1.3, 1], gap="large")
@@ -122,7 +122,7 @@ with a1:
         "- **FP-Growth** association-rule mining (mlxtend)\n"
         "- **Alternating Least Squares** collaborative filtering (implicit)\n"
         "- **Maximal Marginal Relevance** diversity filtering\n"
-        "- **Business-margin–weighted** hybrid ranking"
+        "- **Business-margin-weighted** hybrid ranking"
     )
 with a2:
     theme.chips([

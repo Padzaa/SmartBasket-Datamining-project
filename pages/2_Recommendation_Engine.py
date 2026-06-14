@@ -1,5 +1,5 @@
 """
-Page 2 — Recommendation Engine (main demo page)
+Page 2 - Recommendation Engine (main demo page)
 
 Hybrid FP-Growth + ALS + Margin recommender with MMR diversity
 and explainable outputs.
@@ -28,7 +28,7 @@ st.set_page_config(page_title="Recommendations · SmartBasket AI", page_icon="�
 theme.apply_theme()
 
 
-# ── Load all models ─────────────────────────────────────────────────────────────
+# Load all models
 @st.cache_data(show_spinner=False)
 def _load_transactions():
     return pd.read_csv(BASE / "data" / "processed" / "transactions_clean.csv", parse_dates=["Date"])
@@ -57,7 +57,7 @@ def _load_margins():
 
 @st.cache_resource(show_spinner=False)
 def _load_explainer():
-    # Use all rules for explanation lookup — weaker rules still produce valid citation text.
+    # Use all rules for explanation lookup - weaker rules still produce valid citation text.
     # Quality filtering is for recommendations, not for explanations.
     raw = pd.read_csv(BASE / "models" / "association_rules.csv")
     return ExplanationGenerator(raw)
@@ -77,15 +77,15 @@ all_products = sorted(df["Itemname"].unique().tolist())
 all_customers = sorted(df["CustomerID"].dropna().astype(int).unique().tolist())
 
 
-# ── Masthead ────────────────────────────────────────────────────────────────--
+# Masthead
 theme.masthead(
     eyebrow="Hybrid Recommender",
     title="Recommendation Engine",
-    subtitle="Build a basket and get hybrid, margin-aware recommendations — each one "
+    subtitle="Build a basket and get hybrid, margin-aware recommendations - each one "
              "explained with the rule, lift and confidence behind it.",
 )
 
-# ── Sidebar controls ───────────────────────────────────────────────────────────
+# Sidebar controls
 with st.sidebar:
     st.markdown("##### Output")
     n_recs = st.slider("Number of recommendations", 3, 15, 8)
@@ -110,7 +110,7 @@ with st.sidebar:
         st.success(f"ALS: {len(als_engine.user_ids):,} users · {len(als_engine.item_ids):,} items")
 
 
-# ── Input panel ────────────────────────────────────────────────────────────────
+# Input panel
 col_input, col_results = st.columns([1, 1.6], gap="large")
 
 with col_input:
@@ -146,7 +146,7 @@ with col_input:
         )
 
 
-# ── Results panel ─────────────────────────────────────────────────────────────
+# Results panel
 with col_results:
     if not selected_products:
         st.info("👈 Select products and click **Generate Recommendations**.")
@@ -205,15 +205,15 @@ with col_results:
             )
             popular.columns = ["Product", "Purchases"]
             for _, row in popular.iterrows():
-                st.markdown(f'<div class="fallback-item">📦 <b>{row["Product"].title()}</b> — {row["Purchases"]:,} purchases</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="fallback-item">📦 <b>{row["Product"].title()}</b> - {row["Purchases"]:,} purchases</div>', unsafe_allow_html=True)
         else:
-            st.markdown(f"**{len(ranked)} recommendations** — {'diversity-filtered (MMR)' if use_mmr else 'ranked by hybrid score'}")
+            st.markdown(f"**{len(ranked)} recommendations** - {'diversity-filtered (MMR)' if use_mmr else 'ranked by hybrid score'}")
 
             for rank, (_, row) in enumerate(ranked.iterrows(), 1):
                 explanation = explanations[rank - 1] if rank - 1 < len(explanations) else ""
                 score_pct = int(row["final_score"] * 100)
-                conf_pct  = f"{row['confidence']:.0%}" if row["confidence"] > 0 else "—"
-                lift_val  = f"{row['lift']:.2f}×" if row["lift"] > 0 else "—"
+                conf_pct  = f"{row['confidence']:.0%}" if row["confidence"] > 0 else "-"
+                lift_val  = f"{row['lift']:.2f}×" if row["lift"] > 0 else "-"
 
                 st.markdown(f"""
                 <div class="rec-card">
@@ -260,9 +260,9 @@ with col_results:
                     export_df = ranked[["product", "final_score", "confidence", "lift", "support", "based_on"]].copy()
                     export_df.columns = ["Product", "Score", "Confidence", "Lift", "Support", "Based On"]
                     export_df["Score"]      = export_df["Score"].round(4)
-                    export_df["Confidence"] = export_df["Confidence"].apply(lambda x: f"{x:.1%}" if x > 0 else "—")
-                    export_df["Lift"]       = export_df["Lift"].apply(lambda x: f"{x:.2f}×" if x > 0 else "—")
-                    export_df["Support"]    = export_df["Support"].apply(lambda x: f"{x:.4f}" if x > 0 else "—")
+                    export_df["Confidence"] = export_df["Confidence"].apply(lambda x: f"{x:.1%}" if x > 0 else "-")
+                    export_df["Lift"]       = export_df["Lift"].apply(lambda x: f"{x:.2f}×" if x > 0 else "-")
+                    export_df["Support"]    = export_df["Support"].apply(lambda x: f"{x:.4f}" if x > 0 else "-")
                     export_df.index = range(1, len(export_df) + 1)
                     st.dataframe(export_df, use_container_width=True)
 

@@ -1,5 +1,5 @@
 """
-Page 3 — Association Rules Explorer
+Page 3 - Association Rules Explorer
 
 Interactive filterable table of association rules with charts.
 """
@@ -21,7 +21,7 @@ st.set_page_config(page_title="Rules Explorer · SmartBasket AI", page_icon="�
 theme.apply_theme()
 
 
-# ── Data ───────────────────────────────────────────────────────────────────────
+# Data
 @st.cache_data(show_spinner=False)
 def load_rules():
     return pd.read_csv(BASE / "models" / "association_rules.csv")
@@ -30,7 +30,7 @@ with st.spinner("Loading rules…"):
     rules_raw = load_rules()
 
 
-# ── Masthead ────────────────────────────────────────────────────────────────--
+# Masthead
 theme.masthead(
     eyebrow="Association Rules",
     title="Rules Explorer",
@@ -39,7 +39,7 @@ theme.masthead(
 )
 
 
-# ── Sidebar filters ────────────────────────────────────────────────────────────
+# Sidebar filters
 with st.sidebar:
     st.markdown("##### Filter rules")
 
@@ -68,7 +68,7 @@ with st.sidebar:
     sort_by = st.radio("Sort by", ["lift", "confidence", "support"], horizontal=True)
 
 
-# ── Apply filters ──────────────────────────────────────────────────────────────
+# Apply filters
 filtered = filter_rules(
     rules_raw,
     min_support=min_support,
@@ -87,7 +87,7 @@ if search_term.strip():
 filtered = filtered.sort_values(sort_by, ascending=False).head(top_n)
 
 
-# ── Toolbar: count + download ──────────────────────────────────────────────────
+# Toolbar: count + download
 col_badge, col_dl = st.columns([3, 1])
 with col_badge:
     st.markdown(
@@ -118,7 +118,7 @@ display.index = range(1, len(display) + 1)
 st.dataframe(display, use_container_width=True, height=420)
 
 
-# ── Charts ─────────────────────────────────────────────────────────────────────
+# Charts
 theme.section("Rule landscape", "Strongest patterns and how they're distributed")
 
 c1, c2 = st.columns(2, gap="medium")

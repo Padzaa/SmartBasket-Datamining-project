@@ -1,12 +1,12 @@
 """
-SmartBasket AI — shared design system.
+SmartBasket AI - shared design system.
 
 A single source of truth for the look & feel of every page. Import once per
 page and call `apply_theme()` to inject the global stylesheet, then use the
 small render helpers (`masthead`, `section`, `kpi_row`, `nav_card`, `style_fig`)
 so every page speaks the same visual language.
 
-Design language: light "premium SaaS" — warm off-white canvas, crisp white
+Design language: light "premium SaaS" - warm off-white canvas, crisp white
 surfaces with hairline borders and soft shadows, a confident teal accent used
 sparingly, and a typographic system built on Bricolage Grotesque (display),
 Hanken Grotesk (body) and JetBrains Mono (labels / data).
@@ -19,16 +19,16 @@ from typing import Iterable, Sequence
 
 import streamlit as st
 
-# ── Design tokens ───────────────────────────────────────────────────────────
+# Design tokens
 INK        = "#0d1321"   # primary text
 INK_2      = "#475569"   # secondary text
 MUTED      = "#94a3b8"   # tertiary / captions
 CANVAS     = "#f6f7f9"   # page background
 SURFACE    = "#ffffff"   # cards
 BORDER     = "#e8eaee"   # hairline borders
-ACCENT     = "#0d9488"   # teal — primary accent
-ACCENT_DK  = "#0f766e"   # teal — deep
-ACCENT_SOFT= "#f0fdfa"   # teal — tint
+ACCENT     = "#0d9488"   # teal - primary accent
+ACCENT_DK  = "#0f766e"   # teal - deep
+ACCENT_SOFT= "#f0fdfa"   # teal - tint
 INDIGO     = "#6366f1"   # secondary accent (AI / ALS signal)
 
 # Sequential teal scale reused by charts so data viz stays on-brand.
@@ -39,12 +39,12 @@ FONT_BODY    = "'Hanken Grotesk', system-ui, sans-serif"
 FONT_MONO    = "'JetBrains Mono', ui-monospace, monospace"
 
 
-# ── Global stylesheet ────────────────────────────────────────────────────────
+# Global stylesheet
 _CSS = f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* ── Base ─────────────────────────────────────────────────────────────── */
+/* Base */
 html, body, [data-testid="stAppViewContainer"], [class*="st-"],
 .stMarkdown, .stButton, button, input, textarea, select {{
     font-family: {FONT_BODY};
@@ -69,7 +69,7 @@ h1, h2, h3, h4 {{ font-family: {FONT_DISPLAY}; color: {INK}; letter-spacing: -0.
 [data-testid="stDecoration"] {{ display: none; }}
 #MainMenu, footer {{ visibility: hidden; }}
 
-/* ── Sidebar ──────────────────────────────────────────────────────────── */
+/* Sidebar */
 [data-testid="stSidebar"] {{
     background: {SURFACE};
     border-right: 1px solid {BORDER};
@@ -78,7 +78,7 @@ h1, h2, h3, h4 {{ font-family: {FONT_DISPLAY}; color: {INK}; letter-spacing: -0.
 [data-testid="stSidebarNav"] {{ font-family: {FONT_BODY}; }}
 [data-testid="stSidebarNav"] a span {{ font-size: 0.95rem; font-weight: 500; }}
 
-/* ── Masthead (page header) ───────────────────────────────────────────── */
+/* Masthead (page header) */
 .sb-masthead {{ margin: 0 0 1.9rem; }}
 .sb-eyebrow {{
     font-family: {FONT_MONO};
@@ -98,7 +98,7 @@ h1, h2, h3, h4 {{ font-family: {FONT_DISPLAY}; color: {INK}; letter-spacing: -0.
 }}
 .sb-rule {{ height: 1px; background: {BORDER}; margin: 1.4rem 0 0; }}
 
-/* ── Section header ───────────────────────────────────────────────────── */
+/* Section header */
 .sb-section {{ margin: 2.2rem 0 1.1rem; }}
 .sb-section .lbl {{
     font-family: {FONT_DISPLAY}; font-size: 1.18rem; font-weight: 600;
@@ -110,7 +110,7 @@ h1, h2, h3, h4 {{ font-family: {FONT_DISPLAY}; color: {INK}; letter-spacing: -0.
 }}
 .sb-section .sub {{ font-size: 0.88rem; color: {MUTED}; margin: 0.25rem 0 0 1.2rem; }}
 
-/* ── KPI cards ────────────────────────────────────────────────────────── */
+/* KPI cards */
 .sb-kpi-row {{ display: flex; gap: 0.9rem; flex-wrap: wrap; }}
 .sb-kpi {{
     flex: 1 1 0; min-width: 150px;
@@ -135,7 +135,7 @@ h1, h2, h3, h4 {{ font-family: {FONT_DISPLAY}; color: {INK}; letter-spacing: -0.
 }}
 .sb-kpi .k-sub {{ font-size: 0.78rem; color: {INK_2}; margin-top: 0.25rem; }}
 
-/* ── Nav cards (home) ─────────────────────────────────────────────────── */
+/* Nav cards (home) */
 .sb-nav {{
     display: block; background: {SURFACE}; border: 1px solid {BORDER};
     border-radius: 18px; padding: 1.5rem 1.6rem; height: 100%;
@@ -157,7 +157,7 @@ h1, h2, h3, h4 {{ font-family: {FONT_DISPLAY}; color: {INK}; letter-spacing: -0.
 .sb-nav h3 {{ font-size: 1.12rem; font-weight: 700; margin: 1rem 0 0.3rem; }}
 .sb-nav p  {{ font-size: 0.88rem; color: {INK_2}; margin: 0; line-height: 1.5; }}
 
-/* ── Chips / pills ────────────────────────────────────────────────────── */
+/* Chips / pills */
 .sb-chip {{
     display: inline-flex; align-items: center; gap: 0.4rem;
     background: {SURFACE}; border: 1px solid {BORDER}; border-radius: 999px;
@@ -167,7 +167,7 @@ h1, h2, h3, h4 {{ font-family: {FONT_DISPLAY}; color: {INK}; letter-spacing: -0.
 .sb-chip b {{ color: {INK}; font-weight: 700; }}
 .sb-chip .dot {{ width: 7px; height: 7px; border-radius: 50%; background: {ACCENT}; }}
 
-/* ── Sidebar mini-stats ───────────────────────────────────────────────── */
+/* Sidebar mini-stats */
 .sb-side-stat {{
     display: flex; align-items: baseline; justify-content: space-between;
     padding: 0.5rem 0; border-bottom: 1px dashed {BORDER};
@@ -175,7 +175,7 @@ h1, h2, h3, h4 {{ font-family: {FONT_DISPLAY}; color: {INK}; letter-spacing: -0.
 .sb-side-stat .s-lbl {{ font-size: 0.82rem; color: {INK_2}; }}
 .sb-side-stat .s-val {{ font-family: {FONT_DISPLAY}; font-weight: 700; color: {INK}; }}
 
-/* ── Recommendation cards ─────────────────────────────────────────────── */
+/* Recommendation cards */
 .rec-card {{
     background: {SURFACE}; border: 1px solid {BORDER}; border-radius: 16px;
     padding: 1.15rem 1.3rem; margin-bottom: 0.85rem; position: relative;
@@ -204,7 +204,7 @@ h1, h2, h3, h4 {{ font-family: {FONT_DISPLAY}; color: {INK}; letter-spacing: -0.
 }}
 .fallback-item {{ padding: 0.55rem 0; border-bottom: 1px solid {BORDER}; font-size: 0.92rem; color: {INK_2}; }}
 
-/* ── Toolbar / count badge ────────────────────────────────────────────── */
+/* Toolbar / count badge */
 .sb-count {{
     font-family: {FONT_MONO}; font-size: 0.84rem; color: {ACCENT_DK};
     background: {ACCENT_SOFT}; border: 1px solid #cdeee8; border-radius: 10px;
@@ -212,7 +212,7 @@ h1, h2, h3, h4 {{ font-family: {FONT_DISPLAY}; color: {INK}; letter-spacing: -0.
 }}
 .sb-hint {{ font-size: 0.78rem; color: {MUTED}; margin-top: 0.35rem; }}
 
-/* ── Buttons ──────────────────────────────────────────────────────────── */
+/* Buttons */
 .stButton > button[kind="primary"] {{
     background: {ACCENT}; border: 1px solid {ACCENT_DK}; border-radius: 11px;
     font-weight: 600; box-shadow: 0 1px 2px rgba(13,148,136,0.25);
@@ -237,7 +237,7 @@ def apply_theme() -> None:
     st.markdown(_CSS, unsafe_allow_html=True)
 
 
-# ── Render helpers ────────────────────────────────────────────────────────--
+# Render helpers
 def masthead(eyebrow: str, title: str, subtitle: str = "") -> None:
     """Page header: mono eyebrow, large display title, subtitle, hairline."""
     sub = f'<p class="sb-sub">{html.escape(subtitle)}</p>' if subtitle else ""
@@ -304,11 +304,13 @@ def style_fig(fig, height: int | None = None):
     """Apply the house style to a Plotly figure: transparent canvas, brand
     fonts, restrained gridlines. Traces and colours are left untouched so the
     existing (good) charts keep their identity."""
-    # Preserve any existing title text — passing a title dict without `text`
-    # makes Plotly render the literal string "undefined" as the chart title.
+    # Preserve any existing title text. When the figure has no title,
+    # `fig.layout.title.text` is None - passing that through makes Plotly
+    # render the literal string "undefined" as the chart title, so fall back
+    # to an empty string instead.
     fig.update_layout(
         font=dict(family="Hanken Grotesk, sans-serif", color=INK_2, size=12),
-        title=dict(text=fig.layout.title.text,
+        title=dict(text=fig.layout.title.text or "",
                    font=dict(family="Bricolage Grotesque, sans-serif",
                              color=INK, size=15), x=0, xanchor="left"),
         paper_bgcolor="rgba(0,0,0,0)",

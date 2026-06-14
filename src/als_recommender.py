@@ -5,8 +5,8 @@ Uses the `implicit` library's AlternatingLeastSquares model trained on
 purchase-count implicit feedback data.
 
 Two recommendation modes:
-  - recommend_for_user(user_id)  — personalised for a known customer
-  - recommend_for_items(basket)  — item-based similarity (no customer ID needed)
+  - recommend_for_user(user_id)  - personalised for a known customer
+  - recommend_for_items(basket)  - item-based similarity (no customer ID needed)
 """
 
 import pickle

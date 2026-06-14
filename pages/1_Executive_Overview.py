@@ -1,5 +1,5 @@
 """
-Page 1 — Executive Overview
+Page 1 - Executive Overview
 
 KPIs, top products, category breakdown, rule quality summary.
 """
@@ -20,7 +20,7 @@ st.set_page_config(page_title="Executive Overview · SmartBasket AI", page_icon=
 theme.apply_theme()
 
 
-# ── Data loading ───────────────────────────────────────────────────────────────
+# Data loading
 @st.cache_data(show_spinner=False)
 def load_transactions():
     return pd.read_csv(BASE / "data" / "processed" / "transactions_clean.csv", parse_dates=["Date"])
@@ -40,7 +40,7 @@ with st.spinner("Loading data…"):
     rules_filtered = load_filtered_rules()
 
 
-# ── Category helper ────────────────────────────────────────────────────────────
+# Category helper
 CATEGORY_MAP = {
     "BAG": "Bags & Storage",
     "LUNCH": "Bags & Storage",
@@ -74,14 +74,14 @@ def categorise(name: str) -> str:
 df["Category"] = df["Itemname"].apply(categorise)
 
 
-# ── Masthead ────────────────────────────────────────────────────────────────--
+# Masthead
 theme.masthead(
     eyebrow="Market Basket · Overview",
     title="Executive Overview",
     subtitle="High-level performance metrics and top-line insights drawn from the full transaction dataset.",
 )
 
-# ── KPI row ───────────────────────────────────────────────────────────────────
+# KPI row
 total_txn     = df["BillNo"].nunique()
 total_prod    = df["Itemname"].nunique()
 total_cust    = df["CustomerID"].nunique()
@@ -97,7 +97,7 @@ theme.kpi_row([
 ])
 
 
-# ── Transaction trend ─────────────────────────────────────────────────────────
+# Transaction trend
 theme.section("Transaction momentum", "Unique baskets per week")
 
 daily = (
@@ -121,7 +121,7 @@ with st.container(border=True):
     st.plotly_chart(fig_trend, use_container_width=True)
 
 
-# ── Product & category mix ─────────────────────────────────────────────────────
+# Product & category mix
 theme.section("Product & category mix")
 
 col_top, col_cat = st.columns([1.5, 1], gap="medium")
@@ -157,7 +157,7 @@ with col_cat:
         st.plotly_chart(fig_cat, use_container_width=True)
 
 
-# ── Revenue ─────────────────────────────────────────────────────────────────--
+# Revenue
 theme.section("Revenue by category")
 
 cat_rev = df.groupby("Category")["TransactionValue"].sum().reset_index()
@@ -175,7 +175,7 @@ with st.container(border=True):
     st.plotly_chart(fig_rev, use_container_width=True)
 
 
-# ── Rule quality ────────────────────────────────────────────────────────────--
+# Rule quality
 theme.section("Association-rule quality", "Distribution and trade-off of filtered rules")
 
 col1, col2 = st.columns(2, gap="medium")
@@ -204,7 +204,7 @@ with col2:
         st.plotly_chart(fig_sc, use_container_width=True)
 
 
-# ── Quick insights ─────────────────────────────────────────────────────────--
+# Quick insights
 theme.section("Quick insights")
 
 avg_basket = df.groupby("BillNo")["Itemname"].count().mean()

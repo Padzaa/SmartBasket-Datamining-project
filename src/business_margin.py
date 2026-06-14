@@ -64,7 +64,7 @@ class BusinessMargin:
 
 
 def load_margins(margins_csv: str = None) -> BusinessMargin:
-    """Convenience factory — resolves default path if none given."""
+    """Convenience factory - resolves default path if none given."""
     if margins_csv is None:
         margins_csv = str(
             Path(__file__).parent.parent / "data" / "product_margins.csv"

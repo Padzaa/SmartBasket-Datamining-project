@@ -22,7 +22,7 @@ MODEL_OUTPUT_PATH = Path(__file__).parent.parent / "models" / "als_model.pkl"
 
 def main():
     print("=" * 60)
-    print("SmartBasket AI — ALS Collaborative Filter Training")
+    print("SmartBasket AI - ALS Collaborative Filter Training")
     print("=" * 60)
 
     print(f"\nLoading transactions from:\n  {TRANSACTIONS_PATH}")
@@ -48,7 +48,7 @@ def main():
     rec.save(str(MODEL_OUTPUT_PATH))
 
     # Quick sanity check
-    print("\nSanity check — item-based recommendations for 'JUMBO BAG RED RETROSPOT':")
+    print("\nSanity check - item-based recommendations for 'JUMBO BAG RED RETROSPOT':")
     sample = rec.recommend_for_items(["JUMBO BAG RED RETROSPOT"], n=5)
     for product, score in list(sample.items())[:5]:
         print(f"  {product}  ({score:.4f})")
