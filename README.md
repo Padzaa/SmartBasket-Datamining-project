@@ -200,17 +200,6 @@ Pinned versions are in [`requirements.txt`](requirements.txt).
 
 ---
 
-## 🎬 Demo
-
-A ready-to-use, step-by-step demo walkthrough (with guaranteed-good example products) is available in
-**[`DEMO_SCENARIO.md`](DEMO_SCENARIO.md)**.
-
-**Try these baskets in the Recommendation Engine:**
-- `REGENCY TEA PLATE GREEN` + `REGENCY SUGAR BOWL GREEN` → suggests the rest of the tea set (lift > 100×)
-- `RED RETROSPOT CHARLOTTE BAG` + `STRAWBERRY CHARLOTTE BAG` → the Charlotte bag family
-
----
-
 ## 🔄 Reproducing the model artifacts
 
 The `models/` and `data/processed/` artifacts are committed, so you don't need raw data to run the app.
