@@ -4,8 +4,6 @@ setup(
     name="market_basket_analytics",
     version="1.0.0",
     description="State-of-the-art Market Basket Analysis with Multi-Industry Applications",
-    author="Victor Collins Oppon",
-    author_email="your.email@example.com",
     packages=find_packages(),
     install_requires=[
         "pandas>=2.0.0",
