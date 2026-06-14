@@ -1,0 +1,9 @@
+Dataset Summary
+================================================================================
+
+Total Records: 512,133
+Date Range: 2010-12-01 08:26:00 to 2011-12-09 12:50:00
+Unique Transactions: 19,389
+Unique Products: 3,993
+Unique Customers: 4,292
+Unique Countries: 30

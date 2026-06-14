@@ -1,0 +1,7 @@
+,Recency,Recency,Frequency,Frequency,Monetary,Monetary,Monetary,CLV_Estimate,CLV_Estimate,CLV_Estimate,RFM_Score,CustomerCount
+,mean,median,mean,median,mean,median,sum,mean,median,sum,mean,
+Segment_Name,,,,,,,,,,,,
+At Risk,326.0,326.0,1.0,1.0,77183.6,77183.6,77183.6,28172014.0,28172014.0,28172014.0,7.0,1
+Big Spenders,1.0,1.0,2.0,2.0,168472.5,168472.5,168472.5,301433.64,301433.64,301433.64,13.0,1
+Champions,29.41,12.0,15.32,12.0,10884.92,5575.56,4843787.21,139857.28,7887.26,62236488.6,13.73,445
+Promising,100.1,58.0,2.92,2.0,862.78,567.18,3317384.81,48604.49,5260.23,186884255.59,8.47,3845

@@ -1,0 +1,5 @@
+Clustering Quality Metrics
+==================================================
+
+silhouette_score: 0.6174
+davies_bouldin_score: 0.5844
