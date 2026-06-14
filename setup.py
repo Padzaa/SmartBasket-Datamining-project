@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="Smart Basket Datamining",
     version="1.0.0",
-    description="Smart Basket System for Datamining project ",
+    description="Smart Basket System for Datamining project",
     packages=find_packages(),
     install_requires=[
         "pandas>=2.0.0",
